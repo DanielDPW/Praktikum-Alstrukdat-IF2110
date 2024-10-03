@@ -46,11 +46,13 @@ boolean IsPOINTInEdgeCIRCLE(CIRCLE C, POINT P) {
 }
 
 boolean IsCIRCLEInsideCIRCLE(CIRCLE C1, CIRCLE C2) {
-    return (Panjang(Center(C1), Center(C2)) < fabsf(Radius(C2) - Radius(C1)));
+    float d = Panjang(Center(C1), Center(C2));
+    return (d < fabsf(Radius(C2) - Radius(C1)));
 }
 
 boolean IsCIRCLESTangents(CIRCLE C1, CIRCLE C2) {
-    return (Panjang(Center(C1), Center(C2)) == fmaxf(Radius(C1), Radius(C2)) - fminf(Radius(C1), Radius(C2)) || Panjang(Center(C1), Center(C2)) == (Radius(C1) + Radius(C2)));
+    float d = Panjang(Center(C1), Center(C2));
+    return (d == fabsf(Radius(C2) - Radius(C1)) || d == (Radius(C1) + Radius(C2)));
 }
 
 boolean IsCIRCLESIntersects(CIRCLE C1, CIRCLE C2) {
