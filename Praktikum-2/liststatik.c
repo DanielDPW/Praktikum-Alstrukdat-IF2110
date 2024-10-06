@@ -83,18 +83,21 @@ void printList(ListStatik l) {
 ListStatik plusMinusList(ListStatik l1, ListStatik l2, boolean plus) {
     int length = listLength(l1);
 
+    ListStatik l;
+    CreateListStatik(&l);
+
     int i;
     if (plus) {
         for (i = 0; i < length; i++) {
-            ELMT(l1, i) += ELMT(l2,i);
+            ELMT(l,i) = ELMT(l1, i) + ELMT(l2,i);
         }
     }
     else {
         for (i = 0; i < length; i++) {
-            ELMT(l1,i) -= ELMT(l2,i);
+            ELMT(l,i) = ELMT(l1,i) - ELMT(l2,i);
         }
     }
-    return l1;
+    return l;
 }
 
 boolean isListEqual(ListStatik l1, ListStatik l2) {
