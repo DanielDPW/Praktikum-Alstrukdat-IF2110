@@ -14,28 +14,21 @@ boolean compare(Word x, char y[]) {
     return true;
 }
 
-boolean checkEndNumPunct(Word x, char * punct) {
-    boolean havePunct = false;
-    if (x.TabWord[x.Length - 1] == '.') {
-        *punct = x.TabWord[x.Length - 1];
-        havePunct = true;
-    }
-    return havePunct;
+boolean checkEndNumPunct(Word x) {
+    return (x.TabWord[x.Length - 1] == '.');
 }
 
 int main(void) {
     STARTWORD();
 
     int num = 0;
-    char punct = '\0';
     boolean inNum = false;
     Word current;
 
     while (!EndWord) {
         strcpy(current.TabWord, currentWord.TabWord);
         current.Length = currentWord.Length;
-        punct = '\0';
-        if (checkEndNumPunct(current, &punct)) {
+        if (checkEndNumPunct(current)) {
             currentWord.Length--;
         }
         if (compare(current, "nol")) {
