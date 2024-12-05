@@ -90,3 +90,70 @@ void displayList(List l) {
         displayList(tail(l));
     }
 }
+
+List insertAt(List l, ElType e, int idx) {
+    if (idx == 0) {
+        return konso(l, e);
+    } else {
+        return konso(insertAt(tail(l), e, idx - 1), head(l));
+    }
+}
+
+List deleteFirst(List l) {
+    return tail(l);
+}
+
+List deleteAt(List l, int idx) {
+    if (idx == 0) {
+        return tail(l);
+    } else {
+        return konso(deleteAt(tail(l), idx - 1), head(l));
+    }
+}
+
+List deleteLast(List l) {
+    if (isOneElmt(l)) {
+        return NIL;
+    } else {
+        return konso(deleteLast(tail(l)), head(l));
+    }
+}
+
+List reverseList (List l) {
+    if (isEmpty(l)) {
+        return NIL;
+    } else {
+        return konsb(reverseList(tail(l)), head(l));
+    }
+}
+
+void splitOddEven (List l, List *l1, List *l2) {
+    if (!isEmpty(l)) {
+        if (head(l) % 2 == 0) {
+            splitOddEven(tail(l), l1, l2);
+            *l1 = konso(*l1, head(l));
+        } else if (head(l) % 2 == 1) {
+            splitOddEven(tail(l), l1, l2);
+            *l2 = konso(*l2, head(l));
+        }
+    }
+}
+
+void splitOnX (List l, int x, List *l1, List *l2) {
+    if (x == 0) {
+        *l2 = concat(*l2, l);
+    } else {
+        splitOnX(tail(l), x - 1, l1, l2);
+        *l1 = konso(*l1, head(l));
+    }
+}
+ElType getMiddle(List l) {
+    Address p = l;
+    Address q = l;
+
+    while (q != NULL && tail(q) != NULL) {
+        p = tail(p);
+        q = tail(tail(q));
+    }
+    return head(p);
+}
