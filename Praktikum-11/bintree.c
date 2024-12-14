@@ -92,3 +92,87 @@ void printTree(BinTree p, int h) {
         lvl--;
     }
 }
+
+boolean isEqual(BinTree p1, BinTree p2) {
+    if (isTreeEmpty(p1) && isTreeEmpty(p2)) {
+        return true;
+    } else if (!isTreeEmpty(p1) && !isTreeEmpty(p2)) {
+        return ROOT(p1) == ROOT(p2) && (isEqual(LEFT(p1), LEFT(p2)) && isEqual(RIGHT(p1), RIGHT(p2)));
+    } else {
+        return false;
+    }
+}
+
+int getMaximumDepth(BinTree p) {
+    if (isTreeEmpty(p)) {
+        return 0;
+    } else {
+
+        int left = getMaximumDepth(LEFT(p)) + 1;
+        int right = getMaximumDepth(RIGHT(p)) + 1;
+
+        if (left >= right) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+}
+
+BinTree createBinSearchTreeFromSortedArray(ElType* arr, ElType start, ElType end) {
+    if (start > end) {
+        return NULL;
+    }
+    BinTree p, pleft, pright;
+    int mid = (start + end) / 2;
+    pleft = createBinSearchTreeFromSortedArray(arr, start, mid - 1);
+    pright = createBinSearchTreeFromSortedArray(arr, mid + 1, end);
+    return NewTree(arr[mid], pleft, pright);
+}
+
+int countNodes(BinTree p) {
+    if (isTreeEmpty(p)) {
+        return 0;
+    } else if(isUnerLeft(p)) {
+        return countNodes(LEFT(p)) + 1;
+    } else if(isUnerRight(p)) {
+        return countNodes(RIGHT(p)) + 1;
+    } else {
+        return countNodes(LEFT(p)) + countNodes(RIGHT(p)) + 1;
+    }
+}
+
+void printPathToElement(BinTree p, ElType target) {
+    static int path[100];
+    static int depth = 0;
+    static boolean found = false;
+
+    if (isTreeEmpty(p)) {
+        return;
+    }
+
+    path[depth] = ROOT(p);
+    depth++;
+
+    if (ROOT(p) == target) {
+        for (int i = 0; i < depth; i++) {
+            if (i > 0) {
+                printf(" -> ");
+            }
+            printf("%d", path[i]);
+        }
+        found = true;
+        printf("\n");
+        return;
+    }
+
+    printPathToElement(LEFT(p), target);
+    printPathToElement(RIGHT(p), target);
+
+    depth--;
+
+    if (!found && depth == 0) {
+        printf("-1\n");
+        return;
+    }
+}
